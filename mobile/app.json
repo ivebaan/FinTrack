@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "FinTrack",
+    "slug": "fintrack",
+    "scheme": "fintrack",
+    "orientation": "portrait",
+    "plugins": ["expo-secure-store"]
+  }
+}
