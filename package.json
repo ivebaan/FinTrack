@@ -1,0 +1,13 @@
+{
+  "name": "fintrack",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "mobile"
+  ],
+  "scripts": {
+    "backend:dev": "npm run dev -w @fintrack/backend",
+    "backend:test": "npm run test -w @fintrack/backend",
+    "mobile:start": "npm run start -w @fintrack/mobile"
+  }
+}
