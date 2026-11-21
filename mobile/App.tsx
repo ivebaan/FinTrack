@@ -75,7 +75,9 @@ export default function App() {
   }
 
   return (
-    <AppShell>
+    <AppShell
+      landingOnly={screen === "landing"}
+    >
       {screen === "landing" && (
         <LandingPage
           onLogin={() => setScreen("login")}
