@@ -4,6 +4,14 @@
     "slug": "fintrack",
     "scheme": "fintrack",
     "orientation": "portrait",
-    "plugins": ["expo-secure-store"]
+    "splash": {
+      "image": "./assets/fintrack-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-status-bar"
+    ]
   }
 }
