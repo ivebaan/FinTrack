@@ -26,3 +26,32 @@ export async function clearSession() {
   await SecureStore.deleteItemAsync("fintrack_refresh_token");
   await SecureStore.deleteItemAsync("fintrack_active_tenant");
 }
+
+export async function hasSession() {
+  return Boolean(await SecureStore.getItemAsync("fintrack_access_token"));
+}
+
+export async function login(email: string, password: string) {
+  return apiRequest("/v1/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password })
+  });
+}
+
+export async function register(input: {
+  email: string;
+  password: string;
+  registeredBusinessName: string;
+  businessTin: string;
+  legalForm: "SOLE_PROPRIETORSHIP" | "PARTNERSHIP" | "NON_VAT_CORPORATION";
+  businessAddress: string;
+  taxClassification: "NON_VAT";
+  contactNumber: string;
+  consentVersion: string;
+  consentTimestamp: string;
+}) {
+  return apiRequest("/v1/auth/register", {
+    method: "POST",
+    body: JSON.stringify(input)
+  });
+}
