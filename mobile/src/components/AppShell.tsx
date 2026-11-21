@@ -1,7 +1,22 @@
 import React, { type PropsWithChildren } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
-export function AppShell({ children }: PropsWithChildren) {
+export function AppShell({ children, landingOnly = false }: PropsWithChildren<{ landingOnly?: boolean }>) {
+  if (landingOnly) {
+    return (
+      <SafeAreaView style={styles.safeLanding}>
+        <StatusBar barStyle="dark-content" />
+        <ScrollView
+          style={styles.landingScroll}
+          contentContainerStyle={styles.landingContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {children}
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar barStyle="dark-content" />
@@ -21,6 +36,9 @@ export function AppShell({ children }: PropsWithChildren) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#f7faf9" },
+  safeLanding: { flex: 1, backgroundColor: "#fff" },
+  landingScroll: { flex: 1, backgroundColor: "#fff" },
+  landingContainer: { flexGrow: 1, alignItems: "center" },
   container: { padding: 20, gap: 12 },
   brand: { fontSize: 28, fontWeight: "800", color: "#126b48", marginBottom: 8 },
   notice: {
