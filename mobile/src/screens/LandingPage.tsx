@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Card } from "../components/Card";
 import { PrimaryButton } from "../components/PrimaryButton";
 
@@ -12,6 +12,12 @@ export function LandingPage({
 }) {
   return (
     <Card>
+      <Image
+        source={require("../../assets/fintrack-logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+        accessibilityLabel="FinTrack logo"
+      />
       <Text style={styles.kicker}>BOOKKEEPING FOR SMALL BUSINESSES</Text>
       <Text style={styles.title}>Stay organized, keep records, and know what comes next.</Text>
       <Text style={styles.description}>
@@ -26,6 +32,7 @@ export function LandingPage({
 }
 
 const styles = StyleSheet.create({
+  logo: { width: "100%", height: 160, alignSelf: "center", marginBottom: 8, borderRadius: 12 },
   kicker: { color: "#126b48", fontSize: 12, fontWeight: "800", letterSpacing: 1, marginBottom: 10 },
   title: { color: "#18382d", fontSize: 28, lineHeight: 34, fontWeight: "800", marginBottom: 12 },
   description: { color: "#45564f", lineHeight: 22 },
