@@ -1,7 +1,22 @@
 import React, { type PropsWithChildren } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
-export function AppShell({ children, landingOnly = false }: PropsWithChildren<{ landingOnly?: boolean }>) {
+export function AppShell({ children, landingOnly = false, authOnly = false }: PropsWithChildren<{ landingOnly?: boolean; authOnly?: boolean }>) {
+  if (authOnly) {
+    return (
+      <SafeAreaView style={styles.safeAuth}>
+        <StatusBar barStyle="dark-content" />
+        <ScrollView
+          style={styles.authScroll}
+          contentContainerStyle={styles.authContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {children}
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
   if (landingOnly) {
     return (
       <SafeAreaView style={styles.safeLanding}>
@@ -36,6 +51,9 @@ export function AppShell({ children, landingOnly = false }: PropsWithChildren<{ 
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#f7faf9" },
+  safeAuth: { flex: 1, backgroundColor: "#fff" },
+  authScroll: { flex: 1, backgroundColor: "#fff" },
+  authContainer: { flexGrow: 1 },
   safeLanding: { flex: 1, backgroundColor: "#fff" },
   landingScroll: { flex: 1, backgroundColor: "#fff" },
   landingContainer: { flexGrow: 1, alignItems: "center" },
