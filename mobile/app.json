@@ -5,8 +5,8 @@
     "scheme": "fintrack",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/fintrack-logo.png",
-      "resizeMode": "contain",
+      "image": "./assets/background-splash.jpg",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "plugins": [

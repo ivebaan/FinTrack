@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Image } from "react-native";
 import * as ExpoSplashScreen from "expo-splash-screen";
 import { AppShell } from "./src/components/AppShell";
 import { SplashScreen } from "./src/screens/SplashScreen";
@@ -22,8 +23,16 @@ export default function App() {
     let isMounted = true;
 
     async function prepareApp() {
+      const startedAt = Date.now();
       await ExpoSplashScreen.preventAutoHideAsync();
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const backgroundAsset = Image.resolveAssetSource(require("./assets/background-splash.jpg"));
+      const logoAsset = Image.resolveAssetSource(require("./assets/fintrack-logo.png"));
+      await Promise.all([
+        backgroundAsset?.uri ? Image.prefetch(backgroundAsset.uri) : Promise.resolve(false),
+        logoAsset?.uri ? Image.prefetch(logoAsset.uri) : Promise.resolve(false)
+      ]);
+      const elapsed = Date.now() - startedAt;
+      await new Promise((resolve) => setTimeout(resolve, Math.max(0, 3500 - elapsed)));
       await ExpoSplashScreen.hideAsync();
       if (isMounted) setAppReady(true);
     }
@@ -77,6 +86,7 @@ export default function App() {
   return (
     <AppShell
       landingOnly={screen === "landing"}
+      authOnly={screen === "register" || screen === "login"}
     >
       {screen === "landing" && (
         <LandingPage
@@ -99,6 +109,7 @@ export default function App() {
           error={error}
           onRegister={handleRegister}
           onCancel={() => setScreen("landing")}
+          onLogin={() => setScreen("login")}
         />
       )}
       {screen === "workspace" && (
