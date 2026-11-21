@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import * as ExpoSplashScreen from "expo-splash-screen";
 import { AppShell } from "./src/components/AppShell";
+import { SplashScreen } from "./src/screens/SplashScreen";
 import { LandingPage } from "./src/screens/LandingPage";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { RegistrationScreen } from "./src/screens/RegistrationScreen";
@@ -10,10 +12,32 @@ import type { Me, RegistrationInput } from "./src/types";
 type Screen = "landing" | "login" | "register" | "workspace";
 
 export default function App() {
+  const [appReady, setAppReady] = useState(false);
   const [screen, setScreen] = useState<Screen>("landing");
   const [me, setMe] = useState<Me | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function prepareApp() {
+      await ExpoSplashScreen.preventAutoHideAsync();
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      await ExpoSplashScreen.hideAsync();
+      if (isMounted) setAppReady(true);
+    }
+
+    prepareApp().catch(() => {
+      if (isMounted) setAppReady(true);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!appReady) return <SplashScreen />;
 
   async function handleLogin(email: string, password: string) {
     setLoading(true);
